@@ -1,56 +1,49 @@
+# TODO
+# - bash completions: berkshelf-complete.sh
+
 %define	pkgname	berkshelf
 Summary:	Manages a Cookbook's, or an Application's, Cookbook dependencies
 Name:		ruby-%{pkgname}
-Version:	1.4.0
+Version:	2.0.8
 Release:	0.1
-License:	Distributable
+License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	18f3049da4bb12dd90b9f51e58b7f416
-URL:		http://berkshelf.com
+# Source0-md5:	f44c874ab5d2abd769c93fa6d84c96ab
+URL:		http://berkshelf.com/
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
+BuildRequires:	sed >= 4.0
+Requires:	ruby-activesupport < 3.3
 Requires:	ruby-activesupport >= 3.2.0
-Requires:	ruby-addressable
-Requires:	ruby-aruba
-Requires:	ruby-cane
-Requires:	ruby-celluloid >= 0.13.0
+Requires:	ruby-addressable < 2.4
+Requires:	ruby-addressable >= 2.3.4
+Requires:	ruby-buff-shell_out < 1
+Requires:	ruby-buff-shell_out >= 0.1
+Requires:	ruby-celluloid >= 0.14.0
 Requires:	ruby-chozo >= 0.6.1
 Requires:	ruby-faraday >= 0.8.5
 Requires:	ruby-hashie >= 2.0.2
-Requires:	ruby-json >= 1.5.0
-Requires:	ruby-json_spec
-Requires:	ruby-minitar
-Requires:	ruby-mixlib-config < 2
-Requires:	ruby-mixlib-config => 1.1
-Requires:	ruby-mixlib-shellout < 2
-Requires:	ruby-mixlib-shellout => 1.1
-Requires:	ruby-multi_json < 2
-Requires:	ruby-multi_json => 1.5
-Requires:	ruby-rake >= 0.9.2.2
-Requires:	ruby-retryable
-Requires:	ruby-ridley < 0.10
-Requires:	ruby-ridley => 0.9.0
-Requires:	ruby-rspec
-Requires:	ruby-simplecov
-Requires:	ruby-solve >= 0.4.2
-Requires:	ruby-spork
-Requires:	ruby-thor
+Requires:	ruby-minitar < 0.6
+Requires:	ruby-minitar >= 0.5.4
+Requires:	ruby-rbzip2 < 0.3
+Requires:	ruby-rbzip2 >= 0.2.0
+Requires:	ruby-retryable < 1.4
+Requires:	ruby-retryable >= 1.3.3
+Requires:	ruby-ridley < 1.3
+Requires:	ruby-ridley >= 1.2.1
+Requires:	ruby-rubygems >= 1.8.0
+Requires:	ruby-solve >= 0.5.0
 Requires:	ruby-thor < 0.19
-Requires:	ruby-thor => 0.18.0
-Requires:	ruby-vcr < 2.5
-Requires:	ruby-vcr => 2.4.0
-Requires:	ruby-webmock
-Requires:	ruby-yajl-ruby
+Requires:	ruby-thor >= 0.18.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Manages a Cookbook's, or an Application's, Cookbook dependencies
+Manages a Cookbook's, or an Application's, Cookbook dependencies.
 
 %prep
 %setup -q -n %{pkgname}-%{version}
-
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 %install
@@ -64,10 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README.md PLUGINS.md CHANGELOG.md LICENSE
 %attr(755,root,root) %{_bindir}/berks
 %{ruby_vendorlibdir}/%{pkgname}.rb
 %{ruby_vendorlibdir}/%{pkgname}
-
-# addons to thor
-%{ruby_vendorlibdir}/thor/monkies.rb
-%{ruby_vendorlibdir}/thor/monkies
